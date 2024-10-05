@@ -1,0 +1,81 @@
+﻿@using PagedList;
+@using PagedList.Mvc;
+@model IPagedList<GestionPatiens.Models.Patient>
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+
+@using (Html.BeginForm("Index", "Patients", FormMethod.Get))
+{
+    <p>
+        Nom: @Html.TextBox("nom")
+        Prénom: @Html.TextBox("prenom")
+        Email: @Html.TextBox("email")
+        Tel: @Html.TextBox("tel")
+        Date de naissance: @Html.TextBox("dateNaissance", "", new { type = "date" })
+        <input type="submit" value="Rechercher" />
+    </p>
+}
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.First().NomPatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().PrenomPatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().AdressePatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().EmailPatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().TelPatient)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.First().DateNaissancePatient)
+        </th>
+        <th></th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.NomPatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.PrenomPatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.AdressePatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.EmailPatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.TelPatient)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.DateNaissancePatient)
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "Edit", new { id = item.IdPatient }) |
+                @Html.ActionLink("Details", "Details", new { id = item.IdPatient }) |
+                @Html.ActionLink("Delete", "Delete", new { id = item.IdPatient })
+            </td>
+        </tr>
+    }
+
+</table>
+
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))
